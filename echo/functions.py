@@ -2,7 +2,7 @@ from urllib.request import urlopen
 import time
 
 
-def check_id():
+def check_updating_of_id():
     data = urlopen(
         'https://www.youtube.com/feeds/videos.xml?channel_id=UCSdSBG3MRqhiZv4S1wO39SQ')
     xml_request_1 = data.readlines()
@@ -25,7 +25,7 @@ def check_id():
         time.sleep(5)
 
 if __name__ == '__main__':
-    check_id()
+    check_updating_of_id()
 
 
 
