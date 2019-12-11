@@ -51,15 +51,12 @@ def get_replies(youtube, parentId):
 
 
 if __name__ == '__main__':
-    while True:
-        try:
-            lst_video_id = video_id_about()
-            time_of_video = lst_video_id[0]
-            video_id = lst_video_id[1]
-            youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=YOUTUBE_TOKEN)
-            parentId = get_parent_id(youtube, video_id)
-            x = get_replies(youtube, parentId)
-            insert_into_db(x,time_of_video)
-            time.sleep(3)
-        except:
-            time.sleep(3)
+        lst_video_id = video_id_about()
+        print(lst_video_id)
+        time_of_video = lst_video_id[0]
+        video_id = lst_video_id[1]
+        youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=YOUTUBE_TOKEN)
+        parentId = get_parent_id(youtube, video_id)
+        x = get_replies(youtube, parentId)
+        print(x)
+        # insert_into_db(x,time_of_video)
