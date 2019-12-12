@@ -17,8 +17,15 @@ def get_parent_id(youtube, video_id):
         textFormat="plainText"
     ).execute()
     for item in results["items"]:
-        a = item['id']
-    return a
+        parent_id = item['id']
+        author = item['snippet']['topLevelComment']['snippet']['authorDisplayName']
+        comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
+        time = datetime.strptime(item['snippet']['topLevelComment']['snippet']['publishedAt'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%H:%M:%S')
+        datetime_obj = datetime.strptime(time, "%H:%M:%S")
+        datetime_obj_utc = datetime_obj.replace(tzinfo=tz.tzutc())
+        datetime_obj_mos = datetime_obj_utc.astimezone(tz.tzwinlocal())
+        local_time = datetime_obj_mos.strftime("%H:%M:%S")
+    return [parent_id, local_time, author, comment]
 
 
 def get_replies(youtube, parentId):
@@ -29,7 +36,6 @@ def get_replies(youtube, parentId):
     ).execute()
     lst1 = []
     for i in results['items']:
-        # print(i)
         lst0 = []
         time = datetime.strptime(i['snippet']['publishedAt'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%H:%M:%S')
         datetime_obj = datetime.strptime(time, "%H:%M:%S")
@@ -56,7 +62,8 @@ if __name__ == '__main__':
         time_of_video = lst_video_id[0]
         video_id = lst_video_id[1]
         youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=YOUTUBE_TOKEN)
-        parentId = get_parent_id(youtube, video_id)
-        x = get_replies(youtube, parentId)
-        print(x)
+        parentId = get_parent_id(youtube, video_id)[0]
+        print(parentId)
+        # x = get_replies(youtube, parentId)
+        # print(x)
         # insert_into_db(x,time_of_video)

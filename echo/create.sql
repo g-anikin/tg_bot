@@ -1,4 +1,4 @@
-CREATE TABLE comments(
+CREATE TABLE  if not exists `video_time`(
   id integer primary key,  
   comment_id TEXT,
   time TEXT,

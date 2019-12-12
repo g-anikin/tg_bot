@@ -3,7 +3,7 @@ import time
 from bs4 import BeautifulSoup
 from datetime import datetime
 from dateutil import tz
-
+import json
 
 def check_updating_of_id():
     data = urlopen(
@@ -40,7 +40,10 @@ def video_id_about():
     # print(time_local)
     return [str(time_local), str(video_id)[13:-5], str(title)[7:-8], ]
 
-
+def parse_json():
+    with open('cfg.json','r') as f:
+        data = json.load(f)
+        return data['params']
 
 if __name__ == '__main__':
-    video_id = video_id_about()[1]
+    print(parse_json())
